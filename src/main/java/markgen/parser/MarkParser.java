@@ -14,18 +14,14 @@ public class MarkParser {
     }
 
     /**
-     *
+     * Read a md file
      * @param path file's path
      * @return InputStreamReader
+     *
      */
     public InputStreamReader readFile(String path) throws FileNotFoundException {
-        try {
-            FileInputStream fileIS = new FileInputStream(path);
-
-            return new InputStreamReader(fileIS, StandardCharsets.UTF_8);
-        }catch(FileNotFoundException e){
-            throw new FileNotFoundException("File not exists");
-        }
+        FileInputStream fileIS = new FileInputStream(path);
+        return new InputStreamReader(fileIS, StandardCharsets.UTF_8);
     }
 
     /**
@@ -37,15 +33,10 @@ public class MarkParser {
     public String mdToHtml(Reader input) throws IOException {
         Parser parser = Parser.builder().build();
 
-        try {
+        Node document = parser.parseReader(input);
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
 
-            Node document = parser.parseReader(input);
-            HtmlRenderer renderer = HtmlRenderer.builder().build();
-
-            return renderer.render(document);
-        } catch (IOException e) {
-            throw new IOException("Cannot parse the file");
-        }
+        return renderer.render(document);
     }
 
 }
