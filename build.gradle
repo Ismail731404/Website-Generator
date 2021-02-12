@@ -11,10 +11,20 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
 }
+def commonmarkVersion = '0.17.0'
 
 dependencies {
     // commonmark java
-    implementation 'org.commonmark:commonmark:0.17.0'
+    implementation 'org.commonmark:commonmark:'+commonmarkVersion
+    implementation 'org.commonmark:commonmark-ext-gfm-strikethrough:'+commonmarkVersion
+    implementation 'org.commonmark:commonmark-ext-gfm-tables:'+commonmarkVersion
+    implementation 'org.commonmark:commonmark-ext-autolink:'+commonmarkVersion
+    implementation 'org.commonmark:commonmark-ext-ins:'+commonmarkVersion
+    implementation 'org.commonmark:commonmark-ext-image-attributes:'+commonmarkVersion
+
+
+
+
     // Use JUnit test framework
     testImplementation 'junit:junit:4.13'
 }

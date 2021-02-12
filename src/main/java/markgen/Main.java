@@ -3,19 +3,28 @@
  */
 package markgen;
 
+import markgen.html.HtmlGenerator;
 import markgen.parser.MarkParser;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args){
+        // Create a new instance of MarkParser, to read and render a md file.
         MarkParser p = new MarkParser();
         try {
+            // Read md file
             InputStreamReader reader = p.readFile("test.md");
-            String output = p.mdToHtml(reader);
-            System.out.println(output);
+            // Render md file
+            String body = p.mdToHtml(reader);
+            // Create instance, Default output directory is '_output'
+            // see HtmlGenerator
+            HtmlGenerator htmlGenerator = new HtmlGenerator();
+            // Generate a full html page with header, title and body
+            String page = htmlGenerator.generate("Output", body);
+            // Write generated page to file
+            htmlGenerator.write(page, "test.html");
+
         }catch(IOException e ){
             e.printStackTrace();
         }
