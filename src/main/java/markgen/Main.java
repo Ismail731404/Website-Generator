@@ -5,27 +5,22 @@ package markgen;
 
 import markgen.html.HtmlGenerator;
 import markgen.parser.MarkParser;
+import markgen.command.SSG;
+
+import picocli.CommandLine;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args){
-        // Create a new instance of MarkParser, to read and render a md file.
-        MarkParser p = new MarkParser();
+    public static void main(String[] args) {
         try {
-            // Read md file
-            InputStreamReader reader = p.readFile("test.md");
-            // Render md file
-            String body = p.mdToHtml(reader);
-            // Create instance, Default output directory is '_output'
-            // see HtmlGenerator
-            HtmlGenerator htmlGenerator = new HtmlGenerator();
-            // Generate a full html page with header, title and body
-            String page = htmlGenerator.generate("Output", body);
-            // Write generated page to file
-            htmlGenerator.write(page, "test.html");
-
-        }catch(IOException e ){
+            String[] arguments = {"ssg","-h"};
+            String[] arguments2 = {"ssg", "build", "test.html", "test2.html"};
+            String[] arguments3 = {"ssg", "build", "test.html", "test2.html", "--output-dir", "my_output_dir"};
+            int exitCode = new CommandLine(new SSG()).execute(arguments3); 
+            System.exit(exitCode);
+        } catch(Exception e) {
             e.printStackTrace();
         }
     }
